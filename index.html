@@ -17,12 +17,14 @@
         }
 
         :root {
-            /* Base emoji sizes controlled here for the animation */
-            --emoji-size: 160px; 
+            /* Fallback for older devices: 70% of width or 70% of height minus the 6rem (96px) button bar */
+            --emoji-size: min(70vw, calc((100dvh - 6rem) * 0.7)); 
         }
-        @media (min-width: 640px) {
+
+        @supports (width: 1cqmin) {
             :root {
-                --emoji-size: 220px;
+                /* Modern devices: exactly 70% of the remaining flex container space */
+                --emoji-size: 70cqmin;
             }
         }
 
@@ -52,7 +54,7 @@
     <main id="generator-view" class="flex flex-1 flex-col items-center justify-between w-full h-full z-10">
         
         <!-- Main Emoji Display: absolute centered so font-size animations don't shift layout -->
-        <div class="flex-1 w-full h-full relative">
+        <div class="flex-1 w-full h-full relative" style="container-type: size;">
             <div id="emoji-display" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 leading-none select-none">
                 <!-- Starts empty, waiting for the first tap -->
             </div>
